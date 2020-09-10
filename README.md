@@ -43,8 +43,8 @@ A few notes on what's going on:
 - The `tenantName` and `clientId` are not sensitive information. They can only be used to send the user and token to localhost.
 - The `redirect_uri` is the most significant URL field. This is where you intend to redirect to after login completes, your destination page that will receive the ID token.
 - The `silent_redirect_uri` isn't important yet. This is the URL that will be used in the hidden iframe for token refreshing. You don't need token refreshing for this page that displays the login link.
-- The `post_logout_redirect_uri` isn't important yet either. This is where a logout will send the user. You won't be logging the user out from this page, nor perhaps at all.
-- `signinCallback` returns a promise, but it's moot, because we're about to leave the page.
+- The `post_logout_redirect_uri` isn't important yet either. This is where a logout will send the user. You won't be logging the user out from this page.
+- `signinCallback` returns a promise, but it's not useful, because we're about to leave the page.
 
 After leaving the page, the user will land on our themed Active Directory login page hosted by Microsoft. If the user already has an authenticated session, they will pass invisibly to to the `redirect_uri`.
 
@@ -82,6 +82,8 @@ All requests to our service must include the token as a string in the `Authoriza
 ## Use case: Refreshing the token
 
 The ID token will have an expiration configured on it. In testing, that value will be at least an hour, but in production it's significantly less. Without a fresh token your request will be considered unauthenticated.
+
+We recommend refreshing the token every sixty seconds, which gives you a nice buffer against the five minute token expiration configured in production.
 
 ### Building your `silent_redirect_uri`
 
