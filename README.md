@@ -12,7 +12,7 @@ We recommend the [oidc-client](https://github.com/IdentityModel/oidc-client-js) 
 
 In some cases, this is a link that we will supply when we redirect from TherapyView to your application. You'll probably also need a link like this for users who come directly to the domain (https://games.realsystem.com/ or similar). For testing, you'll need to supply your own page.
 
-You'll need to catch the click event, construct a `UserManager` instance, and use the `signinCallback` method:
+You'll need to catch the click event, construct a `UserManager` instance, and use the `signinRedirect` method:
 
     // Top of file
     const { UserManager, WebStorageStateStore } = require('oidc-client');
@@ -44,7 +44,7 @@ A few notes on what's going on:
 - The `redirect_uri` is the most significant URL field. This is where you intend to redirect to after login completes, your destination page that will receive the ID token.
 - The `silent_redirect_uri` isn't important yet. This is the URL that will be used in the hidden iframe for token refreshing. You don't need token refreshing for this page that displays the login link.
 - The `post_logout_redirect_uri` isn't important yet either. This is where a logout will send the user. You won't be logging the user out from this page.
-- `signinCallback` returns a promise, but it's not useful, because we're about to leave the page.
+- `signinRedirect` returns a promise, but it's not useful, because we're about to leave the page.
 - **The URLs above are similar to what we use in testing, and will be honored by our AAD B2C configuration. If you want to use a different URL (https, domain, port, path), you need to tell us so we can configure it. Azure will refuse to redirect to any URL it hasn't been told about in advance.**
 
 After leaving the page, the user will land on our themed Active Directory login page hosted by Microsoft. If the user already has an authenticated session, they will pass invisibly to to the `redirect_uri`.
