@@ -68,7 +68,7 @@ The token is signed using RSA encryption and can be validated securely on the se
 
 ## Use case: Parsing the user ID from the token
 
-It's trivial for you to decode the token and grab the userID, but keep in mind it's equally difficult to falsify it. **We need to validate first,** and we might as well parse the user ID for you at the same time.
+It's trivial for you to decode the token and grab the userID, but keep in mind it's equally trivial to falsify it. **We need to validate first,** and we might as well parse the user ID for you at the same time.
 
 You need a GraphQL query on our service that returns the userID. This doesn't exist yet, but we'll build it. This will need to be queried immediately after login in order to prove the token is valid and to return any data you need. In the future, if there are fields you need from our database, we can return them here along with the parsed userID.
 
